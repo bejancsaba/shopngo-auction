@@ -8,6 +8,7 @@ build
 web-ui/build-deps
 dist
 .idea
+svc-data
 
 # Log file
 *.log
