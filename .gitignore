@@ -1,6 +1,14 @@
 # Compiled class file
 *.class
 
+# Working directories
+.gradle
+node_modules
+build
+web-ui/build-deps
+dist
+.idea
+
 # Log file
 *.log
 
