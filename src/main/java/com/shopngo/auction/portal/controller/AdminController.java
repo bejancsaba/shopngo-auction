@@ -1,6 +1,6 @@
 package com.shopngo.auction.portal.controller;
 
-import com.shopngo.auction.domain.UserModel;
+import com.shopngo.auction.user.domain.UserModel;
 import com.shopngo.auction.user.serice.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +30,7 @@ public class AdminController {
                 .password("password1")
                 .permissions(Set.of("READ", "BID"))
                 .isVerified(Boolean.FALSE)
+                .email("user1@shopngo.com")
                 .build();
 
         UserModel user2 = UserModel.builder()
@@ -37,6 +38,7 @@ public class AdminController {
                 .password("password2")
                 .permissions(Set.of("READ", "BID"))
                 .isVerified(Boolean.FALSE)
+                .email("user2@shopngo.com")
                 .build();
 
         UserModel verifieduser = UserModel.builder()
@@ -44,13 +46,23 @@ public class AdminController {
                 .password("verifieduserpassword")
                 .permissions(Set.of("READ", "BID", "CREATE"))
                 .isVerified(Boolean.TRUE)
+                .email("verified@shopngo.com")
+                .build();
+
+        UserModel admin = UserModel.builder()
+                .name("admin")
+                .password("admin")
+                .permissions(Set.of("READ", "BID", "CREATE"))
+                .isVerified(Boolean.TRUE)
+                .email("admin@shopngo.com")
                 .build();
 
         userService.addUser(user1);
         userService.addUser(user2);
         userService.addUser(verifieduser);
+        userService.addUser(admin);
 
-        log.info("User data has been populated with user1, user2 and verifieduser");
+        log.info("User data has been populated with user1, user2, verifieduser and admin");
     }
 
     @GetMapping("/users/getAll")

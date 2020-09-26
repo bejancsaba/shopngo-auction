@@ -1,7 +1,8 @@
 package com.shopngo.auction.config;
 
-import com.shopngo.auction.identity.service.DefaultIdentityService;
-import com.shopngo.auction.identity.service.IdentityService;
+import com.shopngo.auction.authentication.service.DefaultAuthenticationService;
+import com.shopngo.auction.authentication.service.AuthenticationService;
+import com.shopngo.auction.authentication.service.JwtBuilderService;
 import com.shopngo.auction.user.dao.repository.UserRepository;
 import com.shopngo.auction.user.serice.UserConverterService;
 import com.shopngo.auction.user.serice.UserService;
@@ -24,7 +25,7 @@ public class AuctionConfig {
     }
 
     @Bean
-    public IdentityService identityService(UserService userService) {
-        return new DefaultIdentityService(userService);
+    public AuthenticationService identityService(UserService userService, JwtBuilderService jwtBuilderService) {
+        return new DefaultAuthenticationService(userService, jwtBuilderService);
     }
 }
