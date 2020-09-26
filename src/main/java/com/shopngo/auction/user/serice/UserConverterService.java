@@ -20,6 +20,7 @@ public class UserConverterService {
                 .name(model.getName())
                 .password(model.getPassword())
                 .email(model.getEmail())
+                .country(model.getCountry())
                 .permissions(CollectionUtils.isEmpty(model.getPermissions()) ? EMPTY
                         : String.join(SERIALIZED_LIST_DELIMITER, model.getPermissions()))
                 .build();
@@ -32,6 +33,7 @@ public class UserConverterService {
                 .name(entity.getName())
                 .password(entity.getPassword())
                 .email(entity.getEmail())
+                .country(entity.getCountry())
                 .permissions(StringUtils.isEmpty(entity.getPermissions()) ? Set.of(EMPTY) :
                         Set.of(entity.getPermissions().split(SERIALIZED_LIST_DELIMITER)))
                 .build();

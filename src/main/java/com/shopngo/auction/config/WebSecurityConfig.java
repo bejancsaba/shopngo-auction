@@ -21,6 +21,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     public static final List<String> NOT_SECURED_PATHS = Arrays.asList(
         "/",
+        "/static/**",
         "/ws/**",
         "/login",
         "/*.{js,html}",

@@ -15,6 +15,7 @@ public class SecurityConfig {
     public static final String AUTH_KEY_NAME = "auth";
     public static final String LOGIN_SESSION_KEY_NAME = "loginSession";
     public static final String EMAIL_KEY_NAME = "email";
+    public static final String COUNTRY_KEY_NAME = "country";
     public static final String VERIFIED_USER_KEY_NAME = "verified";
     public static final String JWT_ISSUER = "ShopNGoIssuer";
 

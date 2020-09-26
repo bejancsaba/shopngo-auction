@@ -30,6 +30,7 @@ public class JwtBuilderService {
                         .withClaim(AUTH_KEY_NAME, String.join(SERIALIZED_LIST_DELIMITER, model.getPermissions()))
                         .withClaim(LOGIN_SESSION_KEY_NAME, loginSession)
                         .withClaim(EMAIL_KEY_NAME, model.getEmail())
+                        .withClaim(COUNTRY_KEY_NAME, model.getCountry())
                         .withClaim(VERIFIED_USER_KEY_NAME, model.getIsVerified())
                         .withSubject(model.getName())
                         .withIssuer(JWT_ISSUER)

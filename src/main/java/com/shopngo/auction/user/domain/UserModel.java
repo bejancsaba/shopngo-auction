@@ -14,4 +14,5 @@ public class UserModel {
     private final String email;
     private final Boolean isVerified;
     private final Set<String> permissions;
+    private final String country;
 }

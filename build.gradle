@@ -1,11 +1,6 @@
 buildscript {
 	ext.springBootVersion = '2.3.4.RELEASE'
 
-	/*repositories {
-		maven { url 'https://repo.spring.io/plugins-release' }
-		maven { url 'https://plugins.gradle.org/m2/' }
-	}*/
-
 	dependencies {
 		classpath("com.github.node-gradle:gradle-node-plugin:3.0.0-rc2")
 	}
