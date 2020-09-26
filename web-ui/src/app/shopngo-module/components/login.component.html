@@ -1,0 +1,42 @@
+<mat-card class="login-box mat-elevation-z0">
+  <mat-card-title>Login</mat-card-title>
+  <!--<pcm-login (successAction)="successAction()"></pcm-login>-->
+  <mat-card-content class="login-form-container">
+    <form class="login-form" [formGroup]="form">
+      <mat-form-field class="login-form__input-field--username">
+        <input matInput
+               color="primary"
+               id="username"
+               name="username"
+               type="text"
+               autofocus
+               formControlName="username"
+               (keyup.enter)="passwordInput.focus()"
+               placeholder="username"/>
+      </mat-form-field>
+      <mat-form-field class="login-form__input-field--password">
+        <input matInput
+               #passwordInput
+               color="primary"
+               id="password"
+               name="password"
+               type="password"
+               formControlName="password"
+               (keyup.enter)="login()"
+               placeholder="password"/>
+      </mat-form-field>
+    </form>
+    <div class="login-form__error">
+      <mat-error *ngIf="authenticationError">
+        Login Failed!
+      </mat-error>
+    </div>
+    <mat-card-actions>
+      <button mat-raised-button
+              color="primary"
+              (click)="login()">
+        <span>Sign In</span>
+      </button>
+    </mat-card-actions>
+  </mat-card-content>
+</mat-card>

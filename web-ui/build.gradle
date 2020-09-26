@@ -1,0 +1,57 @@
+apply plugin: 'com.github.node-gradle.node'
+
+def buildDepsDir = 'build-deps'
+
+node {
+    version = '12.6.0'
+    npmVersion = '6.0.0'
+    yarnVersion = '1.13.0'
+    download = true
+
+    workDir = file("${buildDepsDir}/nodejs")
+    npmWorkDir = file("${buildDepsDir}/npm")
+    yarnWorkDir = file("${buildDepsDir}/yarn")
+    nodeModulesDir = file("${project.projectDir}")
+}
+
+task buildProd(type: YarnTask, dependsOn: 'yarn') {
+    args = ['run', 'ng:build:prod']
+}
+
+task buildDev(type: YarnTask, dependsOn: 'yarn') {
+    args = ['run', 'ng:build:dev']
+}
+
+task lint(type: YarnTask, dependsOn: 'yarn') {
+    args = ['run', 'lint']
+}
+
+// no param: full dev UI + backend build
+// -Pskipui: no UI build at all
+// -Pprodui: build UI with minification of UI code
+// without any flag: run unit tests and prodbuild but no automated UI tests
+task assemble {
+  if (project.hasProperty('produi')) {
+    dependsOn buildProd
+  }
+  else {
+    dependsOn buildDev
+  }
+}
+
+task clean {
+    doLast {
+        delete 'dist'
+    }
+}
+
+task cleanAll {
+    dependsOn clean
+    doLast {
+        delete buildDepsDir, 'node_modules'
+    }
+}
+[nodeSetup, npmSetup, yarnSetup]*.mustRunAfter cleanAll
+
+//NPM should not be used
+npmSetup.enabled = false
