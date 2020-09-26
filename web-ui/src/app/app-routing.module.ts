@@ -3,6 +3,7 @@ import { RouterModule, Routes} from '@angular/router';
 import { LandingComponent } from './shopngo-module/components/landing.component';
 import { LoginComponent } from "./shopngo-module/components/login.component";
 import { PageAccessGuard } from "./shopngo-module/services/page-access-guard.service";
+import { AuctionComponent } from "./shopngo-module/components/auction.component";
 
 const routes: Routes = [
   {
@@ -13,7 +14,12 @@ const routes: Routes = [
     path: '',
     component: LandingComponent,
     canActivate: [PageAccessGuard]
-  }
+  },
+  {
+    path: `auction/:auctionId`,
+    component: AuctionComponent,
+    canActivate: [PageAccessGuard]
+  },
 ];
 
 @NgModule({

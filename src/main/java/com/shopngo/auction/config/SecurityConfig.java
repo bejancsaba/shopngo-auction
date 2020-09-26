@@ -4,7 +4,9 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.shopngo.auction.authentication.service.JwtBuilderService;
 import com.shopngo.auction.portal.security.JwtValidatorService;
+import com.shopngo.auction.portal.security.SecurityService;
 import com.shopngo.auction.portal.security.UnsuccessfulJwtAuthenticationFailureHandler;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -35,5 +37,10 @@ public class SecurityConfig {
     public UnsuccessfulJwtAuthenticationFailureHandler unsuccessfulJwtAuthenticationFailureHandler(
             ObjectMapper objectMapper) {
         return new UnsuccessfulJwtAuthenticationFailureHandler(objectMapper);
+    }
+
+    @Bean
+    public SecurityService securityService() {
+        return new SecurityService();
     }
 }

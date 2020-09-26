@@ -13,12 +13,14 @@ import { MaterialModule } from './material/material.module';
 import { User } from "./shopngo-module/services/user.service";
 import { AclService } from "./shopngo-module/services/acl.service";
 import { AuthJwtServerProvider } from "./shopngo-module/services/auth-jwt.service";
-import {PageAccessGuard} from "./shopngo-module/services/page-access-guard.service";
-import {UrlCacheService} from "./shopngo-module/services/url-cache.service";
-import {JwtInterceptor} from "./shopngo-module/services/jwt-interceptor";
+import { PageAccessGuard } from "./shopngo-module/services/page-access-guard.service";
+import { UrlCacheService } from "./shopngo-module/services/url-cache.service";
+import { JwtInterceptor } from "./shopngo-module/services/jwt-interceptor";
+import { AuctionComponent } from "./shopngo-module/components/auction.component";
 
 @NgModule({
   declarations: [
+    AuctionComponent,
     EntryComponent,
     LoginComponent,
     LandingComponent

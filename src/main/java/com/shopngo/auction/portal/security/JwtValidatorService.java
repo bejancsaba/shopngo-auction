@@ -7,6 +7,7 @@ import com.auth0.jwt.impl.NullClaim;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.shopngo.auction.authentication.domain.EnhancedUserDetails;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 
 import static com.shopngo.auction.config.SecurityConfig.*;
 
+@Slf4j
 public class JwtValidatorService {
 
     private static final Claim EMPTY_CLAIM = new NullClaim();
@@ -43,6 +45,7 @@ public class JwtValidatorService {
 
     public DecodedJWT verifyToken(String authToken) {
         try {
+            log.info("----Verifier?");
             return verifier.verify(authToken);
         }
         catch (JWTVerificationException exception) {
@@ -53,6 +56,7 @@ public class JwtValidatorService {
     private Authentication createAuthenticationFromJwt(DecodedJWT jwt) {
         Map<String, Claim> claims = jwt.getClaims();
 
+        log.info("----FINGERS CROSSED");
         Collection<? extends GrantedAuthority> authorities = Collections.emptyList();
         String permissions = claims.getOrDefault(AUTH_KEY_NAME, EMPTY_CLAIM).asString();
         if (!StringUtils.isEmpty(permissions)) {
@@ -61,6 +65,7 @@ public class JwtValidatorService {
                     .collect(Collectors.toList());
         }
         EnhancedUserDetails principal = getPrincipal(jwt.getSubject(), claims, authorities);
+        log.info("----Should be fine, principal: " + principal.getAuthorities());
         return new UsernamePasswordAuthenticationToken(principal, "", authorities);
     }
 

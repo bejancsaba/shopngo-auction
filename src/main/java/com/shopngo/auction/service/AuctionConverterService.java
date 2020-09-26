@@ -1,17 +1,25 @@
 package com.shopngo.auction.service;
 
+import com.shopngo.auction.portal.domain.AuctionCreationRequest;
 import com.shopngo.auction.service.dao.entity.AuctionEntity;
 import com.shopngo.auction.service.domain.AuctionModel;
+import com.shopngo.auction.user.domain.UserModel;
+import com.shopngo.auction.user.serice.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import static org.apache.logging.log4j.util.Strings.EMPTY;
 
+@RequiredArgsConstructor
 public class AuctionConverterService {
 
     private static final String SERIALIZED_LIST_DELIMITER = ",";
+
+    private final UserService userService;
 
     public AuctionEntity convert(AuctionModel model) {
         return AuctionEntity.builder()
@@ -36,10 +44,26 @@ public class AuctionConverterService {
                 .endDate(entity.getEndDate())
                 .itemId(entity.getItemId())
                 .ownerId(entity.getOwnerId())
+                .ownerName(userService.getUserById(entity.getOwnerId()).map(UserModel::getName).orElse("N/A"))
                 .startingBid(entity.getStartingBid())
                 .tags(stringToList(entity.getTags()))
                 .targetCountries(stringToList(entity.getTargetCountries()))
                 .type(entity.getType())
+                .build();
+    }
+
+    public AuctionModel convert(AuctionCreationRequest request, String ownerId) {
+        return AuctionModel.builder()
+                .description(request.getDescription())
+                .startDate(request.getStartDate())
+                .endDate(request.getEndDate())
+                .itemId(request.getItemId())
+                .ownerId(ownerId)
+                .ownerName(request.getOwner())
+                .startingBid(new BigDecimal(request.getStartingBid()))
+                .tags(stringToList(request.getTags()))
+                .targetCountries(stringToList(request.getTargetCountries()))
+                .type(request.getType())
                 .build();
     }
 

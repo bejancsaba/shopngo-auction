@@ -1,6 +1,89 @@
 <div class="content" role="main">
 
   <h1>Welcome {{userName}}!</h1>
-  <h2>Placeholder for the landing page</h2>
+  <h2>You will find all the auctions in this page below</h2>
+
+  <table style="text-align: center;">
+    <tr>
+      <td class="td-align" style="width: 900px">
+        <div style="max-height: 600px;overflow: auto;">
+          <table mat-table [dataSource]="auctions" class="mat-elevation-z8" style="width:100%;text-align: left;">
+
+            <!-- Type Column -->
+            <ng-container matColumnDef="type">
+              <th mat-header-cell *matHeaderCellDef> Type</th>
+              <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+            </ng-container>
+
+            <!-- OwnerName Column -->
+            <ng-container matColumnDef="ownername">
+              <th mat-header-cell *matHeaderCellDef> OwnerName</th>
+              <td mat-cell *matCellDef="let element"> {{element.ownerName}} </td>
+            </ng-container>
+
+            <!-- ItemId Column -->
+            <ng-container matColumnDef="itemid">
+              <th mat-header-cell *matHeaderCellDef> ItemId</th>
+              <td mat-cell *matCellDef="let element"> {{element.itemId}} </td>
+            </ng-container>
+
+            <!-- TargetCountries Column -->
+            <ng-container matColumnDef="targetcountries">
+              <th mat-header-cell *matHeaderCellDef> TargetCountries</th>
+              <td mat-cell *matCellDef="let element"> {{element.targetCountries}} </td>
+            </ng-container>
+
+            <!-- Tags Column -->
+            <ng-container matColumnDef="tags">
+              <th mat-header-cell *matHeaderCellDef> Tags</th>
+              <td mat-cell *matCellDef="let element"> {{element.tags}} </td>
+            </ng-container>
+
+            <!-- StartingBid Column -->
+            <ng-container matColumnDef="startingBid">
+              <th mat-header-cell *matHeaderCellDef> StartingBid</th>
+              <td mat-cell *matCellDef="let element"> {{element.startingBid}} </td>
+            </ng-container>
+
+            <!-- StartDate Column -->
+            <ng-container matColumnDef="startDate">
+              <th mat-header-cell *matHeaderCellDef> StartDate</th>
+              <td mat-cell *matCellDef="let element"> {{element.startDate}} </td>
+            </ng-container>
+
+            <!-- EndDate Column -->
+            <ng-container matColumnDef="endDate">
+              <th mat-header-cell *matHeaderCellDef> EndDate</th>
+              <td mat-cell *matCellDef="let element"> {{element.endDate}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns" style="position: sticky;"></tr>
+            <tr
+              mat-row
+              *matRowDef="let row; columns: displayedColumns"
+              [routerLink]="['/auction/', row.id]">
+            </tr>
+          </table>
+        </div>
+      </td>
+
+      <td *ngIf="isVerified()" class="td-align">
+        <div>
+          <mat-form-field><input matInput color="primary" placeholder="Type" #typeField></mat-form-field>
+          <mat-form-field><input matInput color="primary" placeholder="ItemId" #itemIdField></mat-form-field>
+          <mat-form-field><input matInput color="primary" placeholder="Description" #descriptionField></mat-form-field>
+          <mat-form-field><input matInput color="primary" placeholder="TagetCountries" #targetCountriesField></mat-form-field>
+          <mat-form-field><input matInput color="primary" placeholder="Tags" #tagsField></mat-form-field>
+          <mat-form-field><input matInput color="primary" placeholder="StartingBid" #startingBidField></mat-form-field>
+          <mat-form-field><input matInput color="primary" placeholder="StartDate" #startDateField></mat-form-field>
+          <mat-form-field><input matInput color="primary" placeholder="EndDate" #endDateField></mat-form-field>
+        </div>
+        <div>
+          <button mat-raised-button color="primary" (click)="onCreate(typeField, itemIdField, descriptionField, targetCountriesField, tagsField, startingBidField, startDateField, endDateField)">Create Auction</button>
+        </div>
+        <p style="font-size:20px">{{clickMessage}}</p>
+      </td>
+    </tr>
+  </table>
 
 </div>

@@ -18,4 +18,8 @@ public class BidService {
                 .map(converter::convert)
                 .collect(Collectors.toList());
     }
+
+    public void deleteAll() {
+        repository.deleteAll();
+    }
 }
