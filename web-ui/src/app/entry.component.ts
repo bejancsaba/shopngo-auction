@@ -7,6 +7,7 @@ import { Router } from "@angular/router";
   selector: 'app-entry',
   template: `
         <button mat-raised-button style="position:absolute;right: 30px;top: 20px;" *ngIf=user.isAuthenticated() (click)=logout()>Logout {{sub}}</button>
+        <img style="position:absolute;left: 10px;top: 5px;width: 60px;height: 60px;" src="public/assets/img/ShopNGo.png">
         <router-outlet></router-outlet>`
 })
 export class EntryComponent implements OnInit {
