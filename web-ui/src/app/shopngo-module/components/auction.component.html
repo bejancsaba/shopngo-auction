@@ -1,7 +1,12 @@
-<div style="text-align: center;">WELCOME to the Auction page! The auction id is: <strong>{{auctionId}}</strong></div>
+<div style="text-align: center;margin-top: 20px;">
+  WELCOME to the Auction page!
+</div>
+<div style="text-align: center;">
+  The auction id is: <strong>{{auctionId}}</strong>
+</div>
 <div class="content" role="main">
 
-  <table style="text-align: left;">
+  <table style="text-align: left;border: 1px solid lightgray;">
     <tr>
       <td class="td-align">
         <p><strong>Auction owner:</strong> {{auction.ownerName}}</p>
@@ -28,10 +33,10 @@
     </tr>
     <tr>
       <td class="td-align">
-        <p><strong>Start Date:</strong> {{auction.startDate}}</p>
+        <p><strong>Start Date:</strong> {{auction.startDate | date:'medium'}}</p>
       </td>
       <td class="td-align">
-        <p><strong>End Date:</strong> {{auction.endDate}}</p>
+        <p><strong>End Date:</strong> {{auction.endDate | date:'medium'}}</p>
       </td>
     </tr>
     <tr>

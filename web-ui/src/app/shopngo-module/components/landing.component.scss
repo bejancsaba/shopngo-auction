@@ -4,18 +4,23 @@ p {
 
 .content {
   display: flex;
-  margin: 82px auto 32px;
+  margin: 40px auto 32px;
   padding: 0 16px;
-  max-width: 1200px;
+  max-width: 1600px;
   flex-direction: column;
   align-items: center;
 }
 
 mat-form-field {
   padding-right: 10px;
+  width: 250px;
 }
 
 .td-align {
   vertical-align: top;
   padding: 30px;
+}
+
+.mat-header-cell {
+  font-size: 16px;
 }

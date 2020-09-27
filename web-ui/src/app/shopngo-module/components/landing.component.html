@@ -5,9 +5,13 @@
 
   <table style="text-align: center;">
     <tr>
-      <td class="td-align" style="width: 900px">
+      <td class="td-align" style="width: 1200px">
         <div style="max-height: 600px;overflow: auto;">
-          <table mat-table [dataSource]="auctions" class="mat-elevation-z8" style="width:100%;text-align: left;">
+          <mat-form-field style="width: 400px;">
+            <mat-label>Filter</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Filter text" #input>
+          </mat-form-field>
+          <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" style="width:100%;text-align: left;">
 
             <!-- Type Column -->
             <ng-container matColumnDef="type">
@@ -57,11 +61,16 @@
               <td mat-cell *matCellDef="let element"> {{element.endDate | date:'medium'}} </td>
             </ng-container>
 
-            <tr mat-header-row *matHeaderRowDef="displayedColumns" style="position: sticky;"></tr>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns" style="position: sticky;font-size: 16px"></tr>
             <tr
               mat-row
               *matRowDef="let row; columns: displayedColumns"
               [routerLink]="['/auction/', row.id]">
+            </tr>
+
+            <!-- Row shown when there is no matching data. -->
+            <tr class="mat-row" *matNoDataRow>
+              <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
             </tr>
           </table>
         </div>
@@ -69,7 +78,6 @@
 
       <td *ngIf="isVerified()" class="td-align">
         <div>
-          <!--<mat-form-field><input matInput color="primary" placeholder="Type" #typeField></mat-form-field>-->
           <mat-form-field>
             <mat-label>Auction Type</mat-label>
             <mat-select [(ngModel)]="selectedType">
@@ -78,7 +86,6 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
-          <!--<mat-form-field><input matInput color="primary" placeholder="ItemId" #itemIdField></mat-form-field>-->
           <mat-form-field>
             <mat-label>Item for auction</mat-label>
             <mat-select [(ngModel)]="selectedItem">
@@ -88,7 +95,6 @@
             </mat-select>
           </mat-form-field>
           <mat-form-field><input matInput color="primary" placeholder="Description" #descriptionField></mat-form-field>
-          <!--<mat-form-field><input matInput color="primary" placeholder="TagetCountries" #targetCountriesField></mat-form-field>-->
           <mat-form-field>
             <mat-label>Country</mat-label>
             <mat-select [(ngModel)]="selectedCountry">
@@ -99,14 +105,15 @@
           </mat-form-field>
           <mat-form-field><input matInput color="primary" placeholder="Tags" #tagsField></mat-form-field>
           <mat-form-field><input matInput color="primary" placeholder="StartingBid" #startingBidField></mat-form-field>
-          <!--<mat-form-field>
+          <mat-form-field>
             <input matInput type="datetime-local" [ngModel]="startDate | date: 'yyyy-MM-ddTHH:mm'" (ngModelChange)="startDate = $event" placeholder="Start Date">
-          </mat-form-field>-->
-          <mat-form-field><input matInput color="primary" placeholder="StartDate" #startDateField></mat-form-field>
-          <mat-form-field><input matInput color="primary" placeholder="EndDate" #endDateField></mat-form-field>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput type="datetime-local" [ngModel]="endDate | date: 'yyyy-MM-ddTHH:mm'" (ngModelChange)="endDate = $event" placeholder="End Date">
+          </mat-form-field>
         </div>
         <div>
-          <button mat-raised-button color="primary" (click)="onCreate(descriptionField, tagsField, startingBidField, startDateField, endDateField)">Create Auction</button>
+          <button mat-raised-button color="primary" (click)="onCreate(descriptionField, tagsField, startingBidField)">Create Auction</button>
         </div>
         <p style="font-size:20px">{{clickMessage}}</p>
       </td>

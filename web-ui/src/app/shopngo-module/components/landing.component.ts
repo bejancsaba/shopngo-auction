@@ -4,6 +4,7 @@ import { WebsocketService } from "../services/websocket.service";
 import { HttpClient } from "@angular/common/http";
 import { AclService } from "../services/acl.service";
 import { Auction } from "../model/auction.model";
+import {MatTableDataSource} from "@angular/material/table";
 
 @Component({
   selector: 'app-root',
@@ -15,6 +16,7 @@ export class LandingComponent implements OnInit {
   webSocketService: WebsocketService;
   topic: string = "/topic/auctions";
   auctions: Auction[];
+  dataSource = new MatTableDataSource(this.auctions);
   items: Item[];
   selectedItem: string;
   auctionTypes: String[];
@@ -24,13 +26,13 @@ export class LandingComponent implements OnInit {
   displayedColumns: string[] = ['type', 'ownername', 'itemname', 'targetcountries', 'tags', 'startingBid', 'startDate', 'endDate'];
   userName = '';
   clickMessage = '';
-  startDate: Date;
+  startDate: string;
+  endDate: string;
 
   constructor(private http: HttpClient, private authProvider: AuthJwtServerProvider, private aclService: AclService) {
     this.webSocketService = new WebsocketService(this.topic, x => this.handleMessage(x));
     this.webSocketService._connect();
     this.userName = authProvider.getIdentity().sub;
-    this.startDate = new Date();
   }
 
   ngOnInit(): void {
@@ -41,17 +43,19 @@ export class LandingComponent implements OnInit {
 
   handleMessage(auctionMessage: string) {
     this.auctions = JSON.parse(auctionMessage);
+    let filter = this.dataSource.filter;
+    this.dataSource = new MatTableDataSource(this.auctions);
+    this.dataSource.filter = filter;
   }
 
   isVerified(): boolean {
     return this.aclService.hasRole('create');
   }
 
-  onCreate(description: HTMLInputElement, tags: HTMLInputElement, startingBid: HTMLInputElement,
-           startDate: HTMLInputElement, endDate: HTMLInputElement) {
-    console.log("---- Start Date: " + this.startDate.getMilliseconds())
+  onCreate(description: HTMLInputElement, tags: HTMLInputElement, startingBid: HTMLInputElement) {
+    console.log("---- Start Date: " +  new Date(this.startDate).getTime())
     this.http.post<AuctionCreateRequest>("/auction", new AuctionCreateRequest(this.selectedType, this.userName, this.selectedItem,
-      description.value, this.selectedCountry, tags.value, startingBid.value, startDate.value, endDate.value))
+      description.value, this.selectedCountry, tags.value, startingBid.value, new Date(this.startDate).getTime(), new Date(this.endDate).getTime()))
       .subscribe(
         response  => {
           this.selectedType = '';
@@ -60,8 +64,8 @@ export class LandingComponent implements OnInit {
           this.selectedCountry = '';
           tags.value = '';
           startingBid.value = '';
-          startDate.value = '';
-          endDate.value = '';
+          this.startDate = '';
+          this.endDate = '';
         },
         error => this.clickMessage = error.json
       );
@@ -87,6 +91,11 @@ export class LandingComponent implements OnInit {
       error => console.log(error.json)
     )
   }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
 }
 
 export interface Item {
@@ -106,7 +115,7 @@ export class AuctionCreateRequest {
   endDate;
 
   constructor(type: string, owner: string, itemId: string, description: string, targetCountries: string,
-              tags: string, startingBid: string, startDate: string, endDate: string) {
+              tags: string, startingBid: string, startDate: number, endDate: number) {
     this.type = type
     this.owner = owner
     this.itemId = itemId
