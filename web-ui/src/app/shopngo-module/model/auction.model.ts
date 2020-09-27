@@ -10,4 +10,5 @@ export interface Auction {
   startingBid: string;
   startDate: string;
   endDate: string;
+  statusMessage: string;
 }

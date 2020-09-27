@@ -23,7 +23,7 @@ export class LandingComponent implements OnInit {
   selectedType: string;
   countries: String[];
   selectedCountry: string;
-  displayedColumns: string[] = ['type', 'ownername', 'itemname', 'targetcountries', 'tags', 'startingBid', 'startDate', 'endDate'];
+  displayedColumns: string[] = ['type', 'ownername', 'itemname', 'targetcountries', 'tags', 'startingBid', 'statusMessage', 'startDate', 'endDate'];
   userName = '';
   clickMessage = '';
   startDate: string;
@@ -95,6 +95,10 @@ export class LandingComponent implements OnInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  isOngoing(auction: Auction): boolean {
+    return "ONGOING" === auction.statusMessage;
   }
 }
 

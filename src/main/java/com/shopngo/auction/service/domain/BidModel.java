@@ -5,7 +5,7 @@ import lombok.Getter;
 
 import java.math.BigDecimal;
 
-@Builder
+@Builder(toBuilder = true)
 @Getter
 public class BidModel {
     private final String id;
@@ -15,4 +15,5 @@ public class BidModel {
     private final String originalCurrency;
     private final BigDecimal exchangeRate;
     private final long timestamp;
+    private final String statusMessage;
 }

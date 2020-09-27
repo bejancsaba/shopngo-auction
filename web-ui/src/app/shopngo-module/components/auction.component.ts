@@ -14,7 +14,7 @@ import {AuctionCreateRequest} from "./landing.component";
 export class AuctionComponent implements OnInit {
   webSocketService: WebsocketService;
   auctionRoot = '/topic/auction/';
-  displayedColumns: string[] = ['bidder', 'bid', 'timestamp'];
+  displayedColumns: string[] = ['bidder', 'bid', 'statusMessage', 'timestamp'];
   auctionId = '';
   bids: Bid[];
   auction: Auction;
@@ -51,6 +51,10 @@ export class AuctionComponent implements OnInit {
         error => this.errorMessage = error.json
       );
   }
+
+  isWinning(bid: Bid): boolean {
+    return "WINNING" === bid.statusMessage;
+  }
 }
 
 export interface Bid {
@@ -61,6 +65,7 @@ export interface Bid {
   originalCurrency: string;
   exchangeRate: string;
   timestamp: string;
+  statusMessage: string;
 }
 
 export class BidRequest {

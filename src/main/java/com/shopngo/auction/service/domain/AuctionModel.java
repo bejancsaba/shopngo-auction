@@ -6,7 +6,7 @@ import lombok.Getter;
 import java.math.BigDecimal;
 import java.util.List;
 
-@Builder
+@Builder(toBuilder = true)
 @Getter
 public class AuctionModel {
     private final String id;
@@ -21,4 +21,5 @@ public class AuctionModel {
     private final BigDecimal startingBid;
     private final long startDate;
     private final long endDate;
+    private final String statusMessage;
 }

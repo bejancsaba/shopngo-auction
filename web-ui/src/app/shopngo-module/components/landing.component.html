@@ -49,6 +49,12 @@
               <td mat-cell *matCellDef="let element"> {{element.startingBid}} </td>
             </ng-container>
 
+            <!-- Status Column -->
+            <ng-container matColumnDef="statusMessage">
+              <th mat-header-cell *matHeaderCellDef> Status</th>
+              <td mat-cell *matCellDef="let element" [class.ongoing]="isOngoing(element)"> {{element.statusMessage}} </td>
+            </ng-container>
+
             <!-- StartDate Column -->
             <ng-container matColumnDef="startDate">
               <th mat-header-cell *matHeaderCellDef> StartDate</th>
