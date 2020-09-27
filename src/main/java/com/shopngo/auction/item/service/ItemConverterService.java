@@ -14,6 +14,7 @@ public class ItemConverterService {
     public ItemEntity convert(ItemModel model) {
         return ItemEntity.builder()
                 .id(model.getId())
+                .name(model.getName())
                 .brand(model.getBrand())
                 .currency(model.getCurrency())
                 .description(model.getDescription())
@@ -25,6 +26,7 @@ public class ItemConverterService {
     public ItemModel convert(ItemEntity entity) {
         return ItemModel.builder()
                 .id(entity.getId())
+                .name(entity.getName())
                 .brand(entity.getBrand())
                 .currency(entity.getCurrency())
                 .description(entity.getDescription())

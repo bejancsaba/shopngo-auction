@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 @Getter
 public class BidModel {
     private final String id;
+    private final String bidder;
     private final String auctionId;
     private final BigDecimal bid;
     private final String originalCurrency;

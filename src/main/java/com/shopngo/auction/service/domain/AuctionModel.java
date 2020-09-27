@@ -14,6 +14,7 @@ public class AuctionModel {
     private final String ownerId;
     private final String ownerName;
     private final String itemId;
+    private final String itemName;
     private final String description;
     private final List<String> targetCountries;
     private final List<String> tags;

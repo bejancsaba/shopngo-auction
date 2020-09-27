@@ -21,10 +21,10 @@
               <td mat-cell *matCellDef="let element"> {{element.ownerName}} </td>
             </ng-container>
 
-            <!-- ItemId Column -->
-            <ng-container matColumnDef="itemid">
-              <th mat-header-cell *matHeaderCellDef> ItemId</th>
-              <td mat-cell *matCellDef="let element"> {{element.itemId}} </td>
+            <!-- Item Column -->
+            <ng-container matColumnDef="itemname">
+              <th mat-header-cell *matHeaderCellDef> ItemName</th>
+              <td mat-cell *matCellDef="let element"> {{element.itemName}} </td>
             </ng-container>
 
             <!-- TargetCountries Column -->
@@ -48,13 +48,13 @@
             <!-- StartDate Column -->
             <ng-container matColumnDef="startDate">
               <th mat-header-cell *matHeaderCellDef> StartDate</th>
-              <td mat-cell *matCellDef="let element"> {{element.startDate}} </td>
+              <td mat-cell *matCellDef="let element"> {{element.startDate | date:'medium'}} </td>
             </ng-container>
 
             <!-- EndDate Column -->
             <ng-container matColumnDef="endDate">
               <th mat-header-cell *matHeaderCellDef> EndDate</th>
-              <td mat-cell *matCellDef="let element"> {{element.endDate}} </td>
+              <td mat-cell *matCellDef="let element"> {{element.endDate | date:'medium'}} </td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns" style="position: sticky;"></tr>
@@ -69,17 +69,44 @@
 
       <td *ngIf="isVerified()" class="td-align">
         <div>
-          <mat-form-field><input matInput color="primary" placeholder="Type" #typeField></mat-form-field>
-          <mat-form-field><input matInput color="primary" placeholder="ItemId" #itemIdField></mat-form-field>
+          <!--<mat-form-field><input matInput color="primary" placeholder="Type" #typeField></mat-form-field>-->
+          <mat-form-field>
+            <mat-label>Auction Type</mat-label>
+            <mat-select [(ngModel)]="selectedType">
+              <mat-option *ngFor="let auctionType of auctionTypes" [value]="auctionType">
+                {{auctionType}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <!--<mat-form-field><input matInput color="primary" placeholder="ItemId" #itemIdField></mat-form-field>-->
+          <mat-form-field>
+            <mat-label>Item for auction</mat-label>
+            <mat-select [(ngModel)]="selectedItem">
+              <mat-option *ngFor="let item of items" [value]="item.id">
+                {{item.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
           <mat-form-field><input matInput color="primary" placeholder="Description" #descriptionField></mat-form-field>
-          <mat-form-field><input matInput color="primary" placeholder="TagetCountries" #targetCountriesField></mat-form-field>
+          <!--<mat-form-field><input matInput color="primary" placeholder="TagetCountries" #targetCountriesField></mat-form-field>-->
+          <mat-form-field>
+            <mat-label>Country</mat-label>
+            <mat-select [(ngModel)]="selectedCountry">
+              <mat-option *ngFor="let country of countries" [value]="country">
+                {{country}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
           <mat-form-field><input matInput color="primary" placeholder="Tags" #tagsField></mat-form-field>
           <mat-form-field><input matInput color="primary" placeholder="StartingBid" #startingBidField></mat-form-field>
+          <!--<mat-form-field>
+            <input matInput type="datetime-local" [ngModel]="startDate | date: 'yyyy-MM-ddTHH:mm'" (ngModelChange)="startDate = $event" placeholder="Start Date">
+          </mat-form-field>-->
           <mat-form-field><input matInput color="primary" placeholder="StartDate" #startDateField></mat-form-field>
           <mat-form-field><input matInput color="primary" placeholder="EndDate" #endDateField></mat-form-field>
         </div>
         <div>
-          <button mat-raised-button color="primary" (click)="onCreate(typeField, itemIdField, descriptionField, targetCountriesField, tagsField, startingBidField, startDateField, endDateField)">Create Auction</button>
+          <button mat-raised-button color="primary" (click)="onCreate(descriptionField, tagsField, startingBidField, startDateField, endDateField)">Create Auction</button>
         </div>
         <p style="font-size:20px">{{clickMessage}}</p>
       </td>

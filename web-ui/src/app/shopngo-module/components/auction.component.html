@@ -1,42 +1,87 @@
 <div style="text-align: center;">WELCOME to the Auction page! The auction id is: <strong>{{auctionId}}</strong></div>
 <div class="content" role="main">
 
+  <table style="text-align: left;">
+    <tr>
+      <td class="td-align">
+        <p><strong>Auction owner:</strong> {{auction.ownerName}}</p>
+      </td>
+      <td class="td-align">
+        <p><strong>Starting Bid:</strong> {{auction.startingBid}}</p>
+      </td>
+    </tr>
+    <tr>
+      <td class="td-align">
+        <p><strong>Description:</strong> {{auction.description}}</p>
+      </td>
+      <td class="td-align">
+        <p><strong>Item Id:</strong> {{auction.itemId}}</p>
+      </td>
+    </tr>
+    <tr>
+      <td class="td-align">
+        <p><strong>Type:</strong> {{auction.type}}</p>
+      </td>
+      <td class="td-align">
+        <p><strong>Tags:</strong> {{auction.tags}}</p>
+      </td>
+    </tr>
+    <tr>
+      <td class="td-align">
+        <p><strong>Start Date:</strong> {{auction.startDate}}</p>
+      </td>
+      <td class="td-align">
+        <p><strong>End Date:</strong> {{auction.endDate}}</p>
+      </td>
+    </tr>
+    <tr>
+      <td class="td-align">
+        <p><strong>Countries:</strong> {{auction.targetCountries}}</p>
+      </td>
+    </tr>
+  </table>
+
   <table style="text-align: center;">
     <tr>
-      <td class="td-align">
-        <p>Auction owner: {{auction.ownerName}}</p>
+      <td class="td-align" style="width: 400px">
+        <div style="max-height: 600px;overflow: auto;">
+          <table mat-table [dataSource]="bids" class="mat-elevation-z8" style="width:100%;text-align: left;">
+
+            <!-- Bidder Column -->
+            <ng-container matColumnDef="bidder">
+              <th mat-header-cell *matHeaderCellDef> Bidder</th>
+              <td mat-cell *matCellDef="let element"> {{element.bidder}} </td>
+            </ng-container>
+
+            <!-- Bid Column -->
+            <ng-container matColumnDef="bid">
+              <th mat-header-cell *matHeaderCellDef> Bid</th>
+              <td mat-cell *matCellDef="let element"> {{element.bid}} </td>
+            </ng-container>
+
+            <!-- TimeStamp Column -->
+            <ng-container matColumnDef="timestamp">
+              <th mat-header-cell *matHeaderCellDef> TimeStamp</th>
+              <td mat-cell *matCellDef="let element"> {{element.timestamp | date:'medium'}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns" style="position: sticky;"></tr>
+            <tr
+              mat-row
+              *matRowDef="let row; columns: displayedColumns">
+            </tr>
+          </table>
+        </div>
       </td>
+
       <td class="td-align">
-        <p>Starting Bid: {{auction.startingBid}}</p>
-      </td>
-    </tr>
-    <tr>
-      <td class="td-align">
-        <p>Description: {{auction.description}}</p>
-      </td>
-      <td class="td-align">
-        <p>Item Id: {{auction.itemId}}</p>
-      </td>
-    </tr>
-    <tr>
-      <td class="td-align">
-        <p>Type: {{auction.type}}</p>
-      </td>
-      <td class="td-align">
-        <p>Tags: {{auction.tags}}</p>
-      </td>
-    </tr>
-    <tr>
-      <td class="td-align">
-        <p>Start Date: {{auction.startDate}}</p>
-      </td>
-      <td class="td-align">
-        <p>End Date: {{auction.endDate}}</p>
-      </td>
-    </tr>
-    <tr>
-      <td class="td-align">
-        <p>Countries: {{auction.targetCountries}}</p>
+        <div>
+          <mat-form-field><input matInput color="primary" placeholder="Bid" #bidField></mat-form-field>
+        </div>
+        <div>
+          <button mat-raised-button color="primary" (click)="placeBid(bidField)">Bid</button>
+        </div>
+        <p style="font-size:20px">{{errorMessage}}</p>
       </td>
     </tr>
   </table>

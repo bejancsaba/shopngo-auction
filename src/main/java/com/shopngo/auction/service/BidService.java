@@ -19,6 +19,10 @@ public class BidService {
                 .collect(Collectors.toList());
     }
 
+    public void placeBid(BidModel model) {
+        repository.save(converter.convert(model));
+    }
+
     public void deleteAll() {
         repository.deleteAll();
     }

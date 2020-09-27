@@ -22,20 +22,20 @@ public class SecurityService {
         return getPermissions().contains(permission.toUpperCase());
     }
 
-    private static List<String> getPermissions() {
-        return getEnhancedUserDetails()
-                .map(enhancedUserDetails -> enhancedUserDetails.getAuthorities().stream()
-                        .map(GrantedAuthority::getAuthority)
-                        .collect(toList()))
-                .orElse(List.of());
-    }
-
-    private static Optional<EnhancedUserDetails> getEnhancedUserDetails() {
+    public static Optional<EnhancedUserDetails> getEnhancedUserDetails() {
         return Optional.of(SecurityContextHolder.getContext())
                 .map(SecurityContext::getAuthentication)
                 .filter(not((AnonymousAuthenticationToken.class::isInstance)))
                 .filter(Authentication::isAuthenticated)
                 .map(Authentication::getPrincipal)
                 .map(EnhancedUserDetails.class::cast);
+    }
+
+    private static List<String> getPermissions() {
+        return getEnhancedUserDetails()
+                .map(enhancedUserDetails -> enhancedUserDetails.getAuthorities().stream()
+                        .map(GrantedAuthority::getAuthority)
+                        .collect(toList()))
+                .orElse(List.of());
     }
 }

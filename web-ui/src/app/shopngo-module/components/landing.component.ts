@@ -15,21 +15,31 @@ export class LandingComponent implements OnInit {
   webSocketService: WebsocketService;
   topic: string = "/topic/auctions";
   auctions: Auction[];
-  displayedColumns: string[] = ['type', 'ownername', 'itemid', 'targetcountries', 'tags', 'startingBid', 'startDate', 'endDate'];
+  items: Item[];
+  selectedItem: string;
+  auctionTypes: String[];
+  selectedType: string;
+  countries: String[];
+  selectedCountry: string;
+  displayedColumns: string[] = ['type', 'ownername', 'itemname', 'targetcountries', 'tags', 'startingBid', 'startDate', 'endDate'];
   userName = '';
   clickMessage = '';
+  startDate: Date;
 
   constructor(private http: HttpClient, private authProvider: AuthJwtServerProvider, private aclService: AclService) {
     this.webSocketService = new WebsocketService(this.topic, x => this.handleMessage(x));
     this.webSocketService._connect();
     this.userName = authProvider.getIdentity().sub;
+    this.startDate = new Date();
   }
 
   ngOnInit(): void {
+    this.getItems();
+    this.getAuctionTypes();
+    this.getCountries();
   }
 
   handleMessage(auctionMessage: string) {
-    console.log("------- Incoming auctionmessage: " + auctionMessage);
     this.auctions = JSON.parse(auctionMessage);
   }
 
@@ -37,17 +47,17 @@ export class LandingComponent implements OnInit {
     return this.aclService.hasRole('create');
   }
 
-  onCreate(type: HTMLInputElement, itemId: HTMLInputElement, description: HTMLInputElement,
-           targetCountries: HTMLInputElement, tags: HTMLInputElement, startingBid: HTMLInputElement,
+  onCreate(description: HTMLInputElement, tags: HTMLInputElement, startingBid: HTMLInputElement,
            startDate: HTMLInputElement, endDate: HTMLInputElement) {
-    this.http.post<AuctionCreateRequest>("/auction", new AuctionCreateRequest(type.value, this.userName, itemId.value,
-      description.value, targetCountries.value, tags.value, startingBid.value, startDate.value, endDate.value))
+    console.log("---- Start Date: " + this.startDate.getMilliseconds())
+    this.http.post<AuctionCreateRequest>("/auction", new AuctionCreateRequest(this.selectedType, this.userName, this.selectedItem,
+      description.value, this.selectedCountry, tags.value, startingBid.value, startDate.value, endDate.value))
       .subscribe(
         response  => {
-          type.value = '';
-          itemId.value = '';
+          this.selectedType = '';
+          this.selectedItem = '';
           description.value = '';
-          targetCountries.value = '';
+          this.selectedCountry = '';
           tags.value = '';
           startingBid.value = '';
           startDate.value = '';
@@ -56,6 +66,32 @@ export class LandingComponent implements OnInit {
         error => this.clickMessage = error.json
       );
   }
+
+  getItems() {
+    return this.http.get<Item[]>("/items").subscribe(
+      response => this.items = response,
+      error => console.log(error.json)
+    )
+  }
+
+  getAuctionTypes() {
+    return this.http.get<String[]>("/static/auctionTypes").subscribe(
+      response => this.auctionTypes = response,
+      error => console.log(error.json)
+    )
+  }
+
+  getCountries() {
+    return this.http.get<String[]>("/static/countries").subscribe(
+      response => this.countries = response,
+      error => console.log(error.json)
+    )
+  }
+}
+
+export interface Item {
+  id: String;
+  name: String;
 }
 
 export class AuctionCreateRequest {

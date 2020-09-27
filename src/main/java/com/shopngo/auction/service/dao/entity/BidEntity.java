@@ -25,6 +25,7 @@ public class BidEntity {
     @Column(name = "id", unique = true)
     private String id;
 
+    private String bidder;
     private String auctionId;
     private BigDecimal bid;
     private String originalCurrency;

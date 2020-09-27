@@ -48,8 +48,8 @@ public class AuctionConfig {
     }
 
     @Bean
-    public BidConverterService bidConverterService() {
-        return new BidConverterService();
+    public BidConverterService bidConverterService(UserService userService) {
+        return new BidConverterService(userService);
     }
 
     @Bean
@@ -58,8 +58,8 @@ public class AuctionConfig {
     }
 
     @Bean
-    public AuctionConverterService auctionConverterService(UserService userService) {
-        return new AuctionConverterService(userService);
+    public AuctionConverterService auctionConverterService(UserService userService, ItemService itemService) {
+        return new AuctionConverterService(userService, itemService);
     }
 
     @Bean

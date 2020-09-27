@@ -2,12 +2,12 @@ shopngo:
   countries:
     - USA
     - UK
-    - Hungary
+    - HUN
 
   countryToCurrencyMap:
     USA: USD
     UK: GBP
-    Hungary: HUF
+    HUN: HUF
 
   rates:
     USD: 1.0

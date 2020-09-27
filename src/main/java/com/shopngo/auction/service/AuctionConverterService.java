@@ -1,5 +1,7 @@
 package com.shopngo.auction.service;
 
+import com.shopngo.auction.item.domain.ItemModel;
+import com.shopngo.auction.item.service.ItemService;
 import com.shopngo.auction.portal.domain.AuctionCreationRequest;
 import com.shopngo.auction.service.dao.entity.AuctionEntity;
 import com.shopngo.auction.service.domain.AuctionModel;
@@ -20,6 +22,7 @@ public class AuctionConverterService {
     private static final String SERIALIZED_LIST_DELIMITER = ",";
 
     private final UserService userService;
+    private final ItemService itemService;
 
     public AuctionEntity convert(AuctionModel model) {
         return AuctionEntity.builder()
@@ -43,6 +46,7 @@ public class AuctionConverterService {
                 .startDate(entity.getStartDate())
                 .endDate(entity.getEndDate())
                 .itemId(entity.getItemId())
+                .itemName(itemService.getItem(entity.getItemId()).map(ItemModel::getName).orElse("N/A"))
                 .ownerId(entity.getOwnerId())
                 .ownerName(userService.getUserById(entity.getOwnerId()).map(UserModel::getName).orElse("N/A"))
                 .startingBid(entity.getStartingBid())

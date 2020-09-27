@@ -32,7 +32,7 @@ public class StaticDataController {
     }
 
     @GetMapping("/auctionTypes")
-    public Map<String, String> getAuctionTypes() {
+    public List<String> getAuctionTypes() {
         return properties.getAuctionTypes();
     }
 }

@@ -3,6 +3,7 @@ export interface Auction {
   type: string;
   ownerName: string;
   itemId: string;
+  itemName: string;
   description: string;
   targetCountries: string;
   tags: string;

@@ -25,6 +25,7 @@ public class ItemEntity {
     @Column(name = "id", unique = true)
     private String id;
 
+    private String name;
     private BigDecimal originalPrice;
     private String currency;
     private String description;

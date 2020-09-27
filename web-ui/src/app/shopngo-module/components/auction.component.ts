@@ -3,6 +3,7 @@ import { HttpClient, HttpParams } from "@angular/common/http";
 import { ActivatedRoute } from "@angular/router";
 import { WebsocketService } from "../services/websocket.service";
 import {Auction} from "../model/auction.model";
+import {AuctionCreateRequest} from "./landing.component";
 
 @Component({
   selector: 'auction-component',
@@ -13,8 +14,9 @@ import {Auction} from "../model/auction.model";
 export class AuctionComponent implements OnInit {
   webSocketService: WebsocketService;
   auctionRoot = '/topic/auction/';
+  displayedColumns: string[] = ['bidder', 'bid', 'timestamp'];
   auctionId = '';
-  message = '';
+  bids: Bid[];
   auction: Auction;
   errorMessage: '';
 
@@ -35,7 +37,36 @@ export class AuctionComponent implements OnInit {
     )
   }
 
-  private handleMessage(x: string) {
-    this.message = x;
+  handleMessage(bidMessage: string) {
+    console.log("------- Incoming bidmessage: " + bidMessage);
+    this.bids = JSON.parse(bidMessage);
+  }
+
+  placeBid(bid: HTMLInputElement) {
+    this.http.post<BidRequest>("/auction/" + this.auctionId + "/bid", new BidRequest(bid.value))
+      .subscribe(
+        response  => {
+          bid.value = '';
+        },
+        error => this.errorMessage = error.json
+      );
+  }
+}
+
+export interface Bid {
+  id: string;
+  bidder: string;
+  auctionId: string;
+  bid: string;
+  originalCurrency: string;
+  exchangeRate: string;
+  timestamp: string;
+}
+
+export class BidRequest {
+  bid = '';
+
+  constructor(bid: string) {
+    this.bid = bid
   }
 }

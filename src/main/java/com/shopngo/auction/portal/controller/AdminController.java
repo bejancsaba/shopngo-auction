@@ -1,5 +1,7 @@
 package com.shopngo.auction.portal.controller;
 
+import com.shopngo.auction.item.domain.ItemModel;
+import com.shopngo.auction.item.service.ItemService;
 import com.shopngo.auction.service.AuctionService;
 import com.shopngo.auction.service.BidService;
 import com.shopngo.auction.user.domain.UserModel;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Set;
 
@@ -29,6 +32,7 @@ public class AdminController {
     private final UserService userService;
     private final AuctionService auctionService;
     private final BidService bidService;
+    private final ItemService itemService;
 
     @GetMapping("/users/populate")
     public void populateUsers() {
@@ -84,10 +88,59 @@ public class AdminController {
         log.info("User data has been purged");
     }
 
+    @GetMapping("/items/populate")
+    public void populateItems() {
+        ItemModel item1 = ItemModel.builder()
+                .name("Item 1")
+                .url("www.shopngo.com/items/item1")
+                .originalPrice(BigDecimal.valueOf(10))
+                .description("Description for item 1")
+                .currency("USD")
+                .brand("SuperBrand")
+                .build();
+
+        ItemModel item2 = ItemModel.builder()
+                .name("Item 2")
+                .url("www.shopngo.com/items/item2")
+                .originalPrice(BigDecimal.valueOf(5))
+                .description("Description for item 2")
+                .currency("USD")
+                .brand("SuperBrand")
+                .build();
+
+        ItemModel item3 = ItemModel.builder()
+                .name("Item 3")
+                .url("www.shopngo.com/items/item3")
+                .originalPrice(BigDecimal.valueOf(3))
+                .description("Description for item 3")
+                .currency("USD")
+                .brand("SuperBrand")
+                .build();
+
+        itemService.saveItem(item1);
+        itemService.saveItem(item2);
+        itemService.saveItem(item3);
+
+        log.info("Item data has been populated with item1, item2 and item3");
+    }
+
+    @GetMapping("/items/getAll")
+    public List<ItemModel> getAllItems() {
+        log.info("Retrieving all existing items");
+        return itemService.getItems();
+    }
+
+    @DeleteMapping("/items/deleteAll")
+    public void deleteAllItems() {
+        itemService.deleteAllItems();
+        log.info("Item data has been purged");
+    }
+
     @DeleteMapping("/auctions/deleteAll")
     public void deleteAllAuctions() {
         auctionService.deleteAll();
         bidService.deleteAll();
+        itemService.deleteAllItems();
         log.info("Auction data has been purged");
     }
 }

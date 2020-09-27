@@ -10,6 +10,7 @@ import java.util.Set;
 @Getter
 public class ItemModel {
     private final String id;
+    private final String name;
     private final BigDecimal originalPrice;
     private final String currency;
     private final String description;

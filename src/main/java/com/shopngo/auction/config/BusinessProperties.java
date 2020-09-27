@@ -17,5 +17,5 @@ public class BusinessProperties {
     private List<String> countries;
     private Map<String, String> countryToCurrencyMap;
     private Map<String, String> rates;
-    private Map<String, String> auctionTypes;
+    private List<String> auctionTypes;
 }
