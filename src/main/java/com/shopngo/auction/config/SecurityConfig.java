@@ -6,7 +6,6 @@ import com.shopngo.auction.authentication.service.JwtBuilderService;
 import com.shopngo.auction.portal.security.JwtValidatorService;
 import com.shopngo.auction.portal.security.SecurityService;
 import com.shopngo.auction.portal.security.UnsuccessfulJwtAuthenticationFailureHandler;
-import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

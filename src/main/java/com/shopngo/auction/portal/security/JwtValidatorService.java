@@ -16,10 +16,19 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.util.StringUtils;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static com.shopngo.auction.config.SecurityConfig.*;
+import static com.shopngo.auction.config.SecurityConfig.ALGORITHM;
+import static com.shopngo.auction.config.SecurityConfig.AUTH_KEY_NAME;
+import static com.shopngo.auction.config.SecurityConfig.BEARER_PREFIX;
+import static com.shopngo.auction.config.SecurityConfig.EMAIL_KEY_NAME;
+import static com.shopngo.auction.config.SecurityConfig.JWT_ISSUER;
+import static com.shopngo.auction.config.SecurityConfig.VERIFIED_USER_KEY_NAME;
 
 @Slf4j
 public class JwtValidatorService {
@@ -45,7 +54,6 @@ public class JwtValidatorService {
 
     public DecodedJWT verifyToken(String authToken) {
         try {
-            log.info("----Verifier?");
             return verifier.verify(authToken);
         }
         catch (JWTVerificationException exception) {
@@ -56,7 +64,6 @@ public class JwtValidatorService {
     private Authentication createAuthenticationFromJwt(DecodedJWT jwt) {
         Map<String, Claim> claims = jwt.getClaims();
 
-        log.info("----FINGERS CROSSED");
         Collection<? extends GrantedAuthority> authorities = Collections.emptyList();
         String permissions = claims.getOrDefault(AUTH_KEY_NAME, EMPTY_CLAIM).asString();
         if (!StringUtils.isEmpty(permissions)) {
@@ -65,7 +72,6 @@ public class JwtValidatorService {
                     .collect(Collectors.toList());
         }
         EnhancedUserDetails principal = getPrincipal(jwt.getSubject(), claims, authorities);
-        log.info("----Should be fine, principal: " + principal.getAuthorities());
         return new UsernamePasswordAuthenticationToken(principal, "", authorities);
     }
 

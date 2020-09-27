@@ -1,0 +1,29 @@
+apply plugin: 'pmd'
+apply plugin: 'checkstyle'
+
+dependencies {
+    checkstyle 'com.puppycrawl.tools:checkstyle:8.28'
+    checkstyle 'com.google.guava:guava:28.2-jre'
+}
+
+pmd {
+    toolVersion = '6.10.0'
+    consoleOutput = true
+}
+tasks.withType(Pmd) {
+    rulePriority = 2
+    ruleSetFiles = files("${rootProject.projectDir}/config/pmd/favorites.xml")
+    ruleSets = []
+}
+
+task checkStyle {
+    dependsOn tasks.withType(Checkstyle)
+}
+
+task pmdCheck {
+    dependsOn tasks.withType(Pmd)
+}
+
+task codeCheck {
+    dependsOn checkStyle, pmdCheck
+}

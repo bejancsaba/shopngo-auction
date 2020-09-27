@@ -10,7 +10,13 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
-import static com.shopngo.auction.config.SecurityConfig.*;
+import static com.shopngo.auction.config.SecurityConfig.ALGORITHM;
+import static com.shopngo.auction.config.SecurityConfig.AUTH_KEY_NAME;
+import static com.shopngo.auction.config.SecurityConfig.COUNTRY_KEY_NAME;
+import static com.shopngo.auction.config.SecurityConfig.EMAIL_KEY_NAME;
+import static com.shopngo.auction.config.SecurityConfig.JWT_ISSUER;
+import static com.shopngo.auction.config.SecurityConfig.LOGIN_SESSION_KEY_NAME;
+import static com.shopngo.auction.config.SecurityConfig.VERIFIED_USER_KEY_NAME;
 
 @Slf4j
 public class JwtBuilderService {
@@ -37,7 +43,8 @@ public class JwtBuilderService {
                         .withExpiresAt(determineValidity())
                         .sign(ALGORITHM)
             );
-        } catch (com.auth0.jwt.exceptions.JWTCreationException exception) {
+        }
+        catch (com.auth0.jwt.exceptions.JWTCreationException exception) {
             log.error("JWT creation issue: " + exception);
         }
 

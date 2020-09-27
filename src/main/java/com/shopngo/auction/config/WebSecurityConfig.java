@@ -1,6 +1,10 @@
 package com.shopngo.auction.config;
 
-import com.shopngo.auction.portal.security.*;
+import com.shopngo.auction.portal.security.JwtAuthenticationEntryPoint;
+import com.shopngo.auction.portal.security.JwtFilter;
+import com.shopngo.auction.portal.security.JwtValidatorService;
+import com.shopngo.auction.portal.security.SkipPathRequestMatcher;
+import com.shopngo.auction.portal.security.UnsuccessfulJwtAuthenticationFailureHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
 import org.springframework.context.annotation.Configuration;
@@ -31,6 +35,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         //METRICS + "/**", ,
         "/v2/api-docs/**",
         "/swagger-resources/**",
+        "/swagger-ui/**",
         "/swagger-ui/index.html",
         "/webjars/springfox-swagger-ui/**"
     );
@@ -61,7 +66,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .anyRequest().authenticated()
             .and()
                 .addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class);
-                    //@formatter:on
+        //@formatter:on
     }
 
     private JwtFilter jwtFilter() throws Exception {

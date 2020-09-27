@@ -12,6 +12,8 @@ plugins {
 	id 'java'
 }
 
+apply from: 'gradle/codequality.gradle'
+
 group = 'com.shopngo'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'

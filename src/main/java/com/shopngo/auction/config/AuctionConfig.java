@@ -1,7 +1,7 @@
 package com.shopngo.auction.config;
 
-import com.shopngo.auction.authentication.service.DefaultAuthenticationService;
 import com.shopngo.auction.authentication.service.AuthenticationService;
+import com.shopngo.auction.authentication.service.DefaultAuthenticationService;
 import com.shopngo.auction.authentication.service.JwtBuilderService;
 import com.shopngo.auction.item.dao.repository.ItemRepository;
 import com.shopngo.auction.item.service.ItemConverterService;

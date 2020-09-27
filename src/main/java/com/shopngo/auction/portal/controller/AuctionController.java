@@ -16,7 +16,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -88,7 +93,7 @@ public class AuctionController {
     public void updateAuctions() {
         Map<String, List<BidModel>> auctions = auctionService.getAllAuctionsWithBids();
         auctions.keySet().forEach(
-                auctionId -> template.convertAndSend(AUCTION_TOPIC_PREFIX + auctionId, auctions.get(auctionId))
+            auctionId -> template.convertAndSend(AUCTION_TOPIC_PREFIX + auctionId, auctions.get(auctionId))
         );
     }
 }

@@ -1,7 +1,7 @@
 package com.shopngo.auction.user.serice;
 
-import com.shopngo.auction.user.domain.UserModel;
 import com.shopngo.auction.user.dao.repository.UserRepository;
+import com.shopngo.auction.user.domain.UserModel;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;

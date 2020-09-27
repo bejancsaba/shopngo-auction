@@ -2,14 +2,11 @@ package com.shopngo.auction.portal.controller;
 
 import com.shopngo.auction.item.domain.ItemModel;
 import com.shopngo.auction.item.service.ItemService;
-import com.shopngo.auction.service.domain.AuctionModel;
-import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;

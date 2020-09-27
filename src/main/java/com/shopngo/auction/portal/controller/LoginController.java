@@ -30,8 +30,8 @@ public class LoginController {
         log.info("Login attempt for user {}", loginRequest.getUsername());
         authenticationService.authenticate(loginRequest.getUsername(), loginRequest.getPassword())
                 .ifPresentOrElse(
-                        token -> response.addHeader(AUTHORIZATION, BEARER_PREFIX + token),
-                        () -> response.setStatus(HttpStatus.BAD_REQUEST.value())
-                );
+                    token -> response.addHeader(AUTHORIZATION, BEARER_PREFIX + token),
+                    () -> response.setStatus(HttpStatus.BAD_REQUEST.value())
+            );
     }
 }

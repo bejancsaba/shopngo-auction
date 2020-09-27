@@ -2,12 +2,6 @@ package com.shopngo.auction.item.service;
 
 import com.shopngo.auction.item.dao.entity.ItemEntity;
 import com.shopngo.auction.item.domain.ItemModel;
-import com.shopngo.auction.user.dao.entity.UserEntity;
-import com.shopngo.auction.user.domain.UserModel;
-import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
-
-import java.util.Set;
 
 public class ItemConverterService {
 

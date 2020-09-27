@@ -1,7 +1,7 @@
 package com.shopngo.auction.user.serice;
 
-import com.shopngo.auction.user.domain.UserModel;
 import com.shopngo.auction.user.dao.entity.UserEntity;
+import com.shopngo.auction.user.domain.UserModel;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
