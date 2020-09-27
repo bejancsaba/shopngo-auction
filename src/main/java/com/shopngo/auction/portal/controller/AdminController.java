@@ -4,6 +4,7 @@ import com.shopngo.auction.item.domain.ItemModel;
 import com.shopngo.auction.item.service.ItemService;
 import com.shopngo.auction.service.AuctionService;
 import com.shopngo.auction.service.BidService;
+import com.shopngo.auction.service.domain.AuctionModel;
 import com.shopngo.auction.user.domain.UserModel;
 import com.shopngo.auction.user.serice.UserService;
 import lombok.RequiredArgsConstructor;
@@ -147,5 +148,12 @@ public class AdminController {
         bidService.deleteAll();
         itemService.deleteAllItems();
         log.info("Auction data has been purged");
+    }
+
+    @GetMapping("/auctions/getAll")
+    @PreAuthorize("@securityService.hasPermission('ADMIN')")
+    public List<AuctionModel> getAllAuctions() {
+        log.info("Retrieving all existing auctions");
+        return auctionService.getAllAuctions();
     }
 }
