@@ -1,0 +1,14 @@
+version: 0.0
+os: linux
+files:
+  - source: build/libs/auction-0.0.1-SNAPSHOT.jar
+    destination: /tmp/
+hooks:
+  ApplicationStop:
+    - location: scripts/stop_application.sh
+      timeout: 30
+      runas: root
+  ApplicationStart:
+    - location: scripts/start_application.sh
+      timeout: 30
+      runas: root

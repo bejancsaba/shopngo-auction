@@ -26,7 +26,6 @@ import java.util.Set;
 @RequiredArgsConstructor
 @Slf4j
 @Profile("!prod")
-@PreAuthorize("@securityService.hasPermission('ADMIN')")
 public class AdminController {
 
     private final UserService userService;
@@ -77,18 +76,21 @@ public class AdminController {
     }
 
     @GetMapping("/users/getAll")
+    @PreAuthorize("@securityService.hasPermission('ADMIN')")
     public List<UserModel> getAllUsers() {
         log.info("Retrieving all existing users");
         return userService.getAllUsers();
     }
 
     @DeleteMapping("/users/deleteAll")
+    @PreAuthorize("@securityService.hasPermission('ADMIN')")
     public void deleteAllUsers() {
         userService.deleteAllUsers();
         log.info("User data has been purged");
     }
 
     @GetMapping("/items/populate")
+    @PreAuthorize("@securityService.hasPermission('ADMIN')")
     public void populateItems() {
         ItemModel item1 = ItemModel.builder()
                 .name("Item 1")
@@ -125,18 +127,21 @@ public class AdminController {
     }
 
     @GetMapping("/items/getAll")
+    @PreAuthorize("@securityService.hasPermission('ADMIN')")
     public List<ItemModel> getAllItems() {
         log.info("Retrieving all existing items");
         return itemService.getItems();
     }
 
     @DeleteMapping("/items/deleteAll")
+    @PreAuthorize("@securityService.hasPermission('ADMIN')")
     public void deleteAllItems() {
         itemService.deleteAllItems();
         log.info("Item data has been purged");
     }
 
     @DeleteMapping("/auctions/deleteAll")
+    @PreAuthorize("@securityService.hasPermission('ADMIN')")
     public void deleteAllAuctions() {
         auctionService.deleteAll();
         bidService.deleteAll();
