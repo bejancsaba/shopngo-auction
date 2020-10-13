@@ -31,7 +31,7 @@ Registered users with verified badge (an auction owner) should have the ability 
 ## Technical considerations
  
 - The customer has plans to create a cloud-native solution. A customer architect is not sure that cloud provider is best for them, but they expects to have all required environments, CI/CD pipelines, databases in the cloud of the one of top cloud vendors;
-- Preferable platform is technology of your choice for both backend and frontend;  
+- Preferable platform is technology of your choice for both backend and frontend;
 - The customer expects our solution to be same tech quality as the code that you write in your day to day job;
 - The customer expects our solution will have no 3rd-party components; however, we are free to use open source libs (we do not expect to write csv parsing on our own);
  
